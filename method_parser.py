@@ -2,8 +2,6 @@ import clang.cindex
 
 
 class CppMethod(object):
-    """docstring for CppMethod"""
-
     def __init__(
             self,
             name,

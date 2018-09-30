@@ -1,5 +1,6 @@
 from method_parser import CppMethod
 
+
 def _generate_arguments(arguments):
     output = []
     print(type(arguments))
@@ -8,17 +9,16 @@ def _generate_arguments(arguments):
     return ', '.join(output)
 
 
-
 def generate_mock_method(CppMethod):
-    template = '{mock_macro}{num_args}({method_name}, {return_type}({arguments}));'
     num_args = len(CppMethod.arguments())
-    mock_macro = 'MOCK_METHOD'
     method_name = CppMethod.name()
     return_type = CppMethod.return_type()
     arguments = _generate_arguments(CppMethod.arguments())
+    mock_macro = 'MOCK_METHOD'
     if CppMethod.is_const():
         mock_macro = 'MOCK_CONST_METHOD'
 
+    template = '{mock_macro}{num_args}({method_name}, {return_type}({arguments}));'
     return template.format(
         mock_macro=mock_macro,
         num_args=num_args,

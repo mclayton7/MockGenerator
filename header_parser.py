@@ -5,8 +5,6 @@ from class_parser import class_factory
 
 
 class HeaderParser(object):
-    """docstring for Parser"""
-
     def __init__(self, file_name):
         self._file_name = file_name
         self._forward_declares = []
