@@ -35,5 +35,6 @@ protected:
 protected: //signals
 	virtual void simpleSignal() = 0;
 	virtual void signalWithOneIntArg(int count) = 0;
+	virtual void signalWithTwoIntArgs(int count, anotherCount) = 0;
 	virtual void signalWithOneRefArg(const QString& stringArg) = 0;
 };

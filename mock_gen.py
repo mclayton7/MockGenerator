@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 
 from header_parser import HeaderParser
 from mock_header_generator import generate_mock_header
-from mock_method_generator import generate_mock_method
+from mock_source_generator import generate_mock_source
 
 def main():
-    parser = argparse.ArgumentParser(description='Short sample app')
-    parser.add_argument('interface_path', help='path/to/interface.h')
-    args = parser.parse_args()
-
+    args = parse_args()
     header = HeaderParser(args.interface_path)
 
     classes = header.classes()
@@ -20,12 +18,24 @@ def main():
     methods = first_class.methods()
     signals = first_class.signals()
 
-    mock_methods = [generate_mock_method(m) for m in methods]
-    signals = [str(s) for s in signals]
+    header_string = generate_mock_header(interface_name, methods, signals)
+    source_string = generate_mock_source(interface_name, methods, signals)
 
-    output = generate_mock_header(interface_name, mock_methods, signals)
+    write_file(args.interface_path, 'MockClass.h', header_string)
+    write_file(args.interface_path, 'MockClass.cc', source_string)
 
-    print(output)
+def parse_args():
+    parser = argparse.ArgumentParser(description='Short sample app')
+    parser.add_argument('interface_path', help='path/to/interface.h')
+    return parser.parse_args()
+
+
+def write_file(interface_path, mock_filename, data):
+    file_path = os.path.join(os.path.dirname(interface_path), mock_filename)
+    print(file_path)
+    with open(file_path, 'w') as f:
+        f.write(data)
+
 
 if __name__ == '__main__':
     main()

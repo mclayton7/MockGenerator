@@ -1,7 +1,9 @@
+from mock_method_generator import generate_mock_method
 
-TEMPLATE = '''
-#pragma once
 
+TEMPLATE = '''#pragma once
+
+#include <{INTERFACE_NAME}.h>
 {HEADERS}
 
 class {MOCK_CLASS_NAME} : public QObject, public {INTERFACE_NAME}
@@ -18,6 +20,7 @@ public:
 '''
 
 SIGNALS_TEMPLATE = '''
+    {SIGNAL_HELPERS}
 signals:
     {SIGNALS}
 '''
@@ -30,12 +33,42 @@ DEFAULT_HEADERS = [
 def _class_name(interface_name):
     return interface_name[2:]
 
+def _signal_helper_name(signal_name):
+    return 'emit{}'.format(signal_name[0].upper() + signal_name[1:])
+
+def _format_arguments(arguments):
+    if len(arguments) is 0: return ''
+    TEMPLATE = '{TYPE} value{COUNT}, '
+    output = ''
+    count = 0
+    for argument in arguments:
+        output += TEMPLATE.format(
+            TYPE=argument[0],
+            COUNT=count)
+        count += 1
+    output_with_trailing_comma_and_space_removed = output[:-2]
+    return output_with_trailing_comma_and_space_removed
+
 def _method_string(methods):
-    return '    ' + '\n    '.join(methods)
+    mock_methods = [generate_mock_method(m) for m in methods]
+    return '    ' + '\n    '.join(mock_methods)
+
+
+def _signal_helpers(signals):
+    TEMPLATE='void {SIGNAL_NAME}({ARGUMENTS});\n    '
+    output = ''
+    for signal in signals:
+        output += TEMPLATE.format(
+            SIGNAL_NAME=_signal_helper_name(signal.name()),
+            ARGUMENTS=_format_arguments(signal.arguments()))
+    return output
+
 
 def _signals_string(signals):
     if len(signals) is 0: return ''
-    return SIGNALS_TEMPLATE.format(SIGNALS='\n    '.join(signals))
+    return SIGNALS_TEMPLATE.format(
+        SIGNAL_HELPERS=_signal_helpers(signals),
+        SIGNALS='\n    '.join([str(s) for s in signals]))
 
 
 def generate_mock_header(interface_name, methods = [], signals = []):
