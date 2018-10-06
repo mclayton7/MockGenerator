@@ -3,7 +3,6 @@ from method_parser import CppMethod
 
 def _generate_arguments(arguments):
     output = []
-    print(type(arguments))
     for argument in arguments:
         output += ['{type} {name}'.format(type=argument[0], name=argument[1])]
     return ', '.join(output)

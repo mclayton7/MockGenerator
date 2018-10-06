@@ -1,2 +1,5 @@
 @echo off
-python.exe -m unittest discover -vfcb
+:: v - verbose
+:: f - failfast
+:: c - catch CTRL-C
+python.exe -m unittest discover -vfc

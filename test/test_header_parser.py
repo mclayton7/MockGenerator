@@ -17,9 +17,7 @@ class TestParser(unittest.TestCase):
 
         patient = HeaderParser(os.path.join(directory, 'I_SimpleInterface.h'))
 
-        actual_count = len(patient.classes()[0].methods())
-        self.assertEqual(actual_count, expected_count)
-
+        self.assertEqual(len(patient.classes()[0].methods()), expected_count)
 
     def test_will_find_signals(self):
         expected_count = 3
