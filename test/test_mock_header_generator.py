@@ -1,7 +1,9 @@
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
 import unittest
 import os
 from mock_header_generator import generate_mock_header
-
 
 class TestMockHeaderGenerator(unittest.TestCase):
     def test_will_define_class_that_inherits_from_qobject_and_interface(self):

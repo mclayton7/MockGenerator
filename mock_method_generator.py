@@ -1,3 +1,6 @@
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
 from method_parser import CppMethod
 
 

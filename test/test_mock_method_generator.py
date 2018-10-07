@@ -1,3 +1,6 @@
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
 import unittest
 from method_parser import CppMethod
 from mock_method_generator import *

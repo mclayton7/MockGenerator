@@ -1,5 +1,7 @@
-import clang.cindex
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
 
+import clang.cindex
 
 class CppMethod(object):
     def __init__(

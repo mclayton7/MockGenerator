@@ -1,3 +1,6 @@
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
 import unittest
 import os
 from header_parser import HeaderParser
@@ -20,7 +23,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(patient.classes()[0].methods()), expected_count)
 
     def test_will_find_signals(self):
-        expected_count = 3
+        expected_count = 4
 
         patient = HeaderParser(os.path.join(directory, 'I_SimpleInterface.h'))
 

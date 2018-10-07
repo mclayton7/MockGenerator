@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
 
 import argparse
 import os
@@ -6,6 +8,7 @@ import os
 from header_parser import HeaderParser
 from mock_header_generator import generate_mock_header
 from mock_source_generator import generate_mock_source
+from utils import mock_class_name
 
 def main():
     args = parse_args()
@@ -21,8 +24,10 @@ def main():
     header_string = generate_mock_header(interface_name, methods, signals)
     source_string = generate_mock_source(interface_name, methods, signals)
 
-    write_file(args.interface_path, 'MockClass.h', header_string)
-    write_file(args.interface_path, 'MockClass.cc', source_string)
+    class_name = mock_class_name(interface_name)
+
+    write_file(args.interface_path, '{}.h'.format(class_name), header_string)
+    write_file(args.interface_path, '{}.cc'.format(class_name), source_string)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Short sample app')

@@ -1,6 +1,8 @@
+# Copyright (c) Mac Clayton. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
 from mock_method_generator import generate_mock_method
-
-
+from utils import mock_class_name
 TEMPLATE = '''#pragma once
 
 #include <{INTERFACE_NAME}.h>
@@ -30,8 +32,6 @@ DEFAULT_HEADERS = [
     '#include <gtest/gmock.h>'
 ]
 
-def _class_name(interface_name):
-    return interface_name[2:]
 
 def _signal_helper_name(signal_name):
     return 'emit{}'.format(signal_name[0].upper() + signal_name[1:])
@@ -73,10 +73,10 @@ def _signals_string(signals):
 
 def generate_mock_header(interface_name, methods = [], signals = []):
     headers = '\n'.join(DEFAULT_HEADERS)
-    mock_class_name = 'Mock{}'.format(_class_name(interface_name))
+
     return TEMPLATE.format(
         HEADERS=headers,
-        MOCK_CLASS_NAME=mock_class_name,
+        MOCK_CLASS_NAME=mock_class_name(interface_name),
         INTERFACE_NAME=interface_name,
         METHODS=_method_string(methods),
         SIGNALS=_signals_string(signals))
