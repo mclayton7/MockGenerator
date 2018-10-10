@@ -1,0 +1,2 @@
+# MockGenerator
+Generates a mock classes from an interface using libclang to parse
